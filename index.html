@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Resume v2</title>
+    <style>
+        /* Your existing cutesy styles here */
+        :root {
+            --accent: #ff85a2;
+            --text: #4a4a4a;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff0f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* NEW: Counter Style */
+        .counter-container {
+            margin-top: 20px;
+            padding: 8px 15px;
+            background: white;
+            border-radius: 50px;
+            display: inline-block;
+            font-size: 0.85rem;
+            color: var(--text);
+            box-shadow: 0 4px 10px rgba(255, 133, 162, 0.2);
+            border: 1px solid var(--accent);
+        }
+        #counter {
+            font-weight: bold;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glass-card">
+        <h1>Welcome to v2! </h1>
+        <p>I am now a Cloud Engineer in training.</p>
+
+        <div class="counter-container">
+         Viewed by <span id="counter">...</span> visitors
+        </div>
+    </div>
+
+    <script>
+        async function updateCounter() {
+            try {
+                // !!! REPLACE THE URL BELOW WITH YOUR API GATEWAY URL !!!
+                let response = await fetch('https://k1zx8l5b0c.execute-api.us-east-1.amazonaws.com/default/cloud-resume-updater');
+                let data = await response.json();
+                document.getElementById('counter').innerText = data.count;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('counter').innerText = "error";
+            }
+        }
+        updateCounter();
+    </script>
+</body>
+</html>
